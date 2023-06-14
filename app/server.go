@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"app/router"
 	"log"
 	"net/http"
 
@@ -9,17 +9,17 @@ import (
 )
 
 func hello(context echo.Context) error {
-	fmt.Println("Hello, World!")
+
 	return context.String(http.StatusOK, "Hello, World!")
 }
 
 func main() {
-	router := echo.New()
+	server := echo.New()
 
-	router.GET("/", hello)
+	server.GET("/", hello)
+	router.Register(server)
 
-	if err := router.Start(":8080"); err != http.ErrServerClosed {
+	if err := server.Start(":8080"); err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
-
 }
